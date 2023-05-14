@@ -124,19 +124,17 @@ const Home = () => {
     fetch('https://fake-api-tau.vercel.app/api/eplay/promocoes')
       .then((res) => res.json())
       .then((data) => setPromocoes(data))
-  }, [])
 
-  // useEffect(() => {
-  //   fetch('https://fake-api-tau.vercel.app/api/eplay/em-breve')
-  //     .then((res) => res.json())
-  //     .then((data) => setEmBreve(data))
-  // }, [])
+    fetch('https://fake-api-tau.vercel.app/api/eplay/em-breve')
+      .then((res) => res.json())
+      .then((data) => setEmBreve(data))
+  }, [])
 
   return (
     <>
       <Banner />
       <ProductList title="Promoções" background="gray" games={promocoes} />
-      {/* <ProductList title="Em breve" background="black" games={emBreve} /> */}
+      <ProductList title="Em breve" background="black" games={emBreve} />
     </>
   )
 }

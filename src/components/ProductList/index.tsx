@@ -10,14 +10,14 @@ export type Props = {
   games: Game[]
 }
 
-const ProductList = ({ title, background, games }: Props) => {
-  const formataPreco = (preco: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(preco)
-  }
+export const formataPreco = (preco = 0) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(preco)
+}
 
+const ProductList = ({ title, background, games }: Props) => {
   const getGameTags = (game: Game) => {
     const tags = []
     if (game.release_date) {
@@ -38,15 +38,17 @@ const ProductList = ({ title, background, games }: Props) => {
         <Titulo>{title}</Titulo>
         <List>
           {games.map((game) => (
-            <Product
-              key={game.id}
-              title={game.name}
-              description={game.description}
-              system={game.details.system}
-              category={game.details.category}
-              image={game.media.thumbnail}
-              infos={getGameTags(game)}
-            />
+            <li key={game.id}>
+              <Product
+                title={game.name}
+                description={game.description}
+                system={game.details.system}
+                category={game.details.category}
+                image={game.media.thumbnail}
+                infos={getGameTags(game)}
+                id={game.id}
+              />
+            </li>
           ))}
         </List>
       </div>
