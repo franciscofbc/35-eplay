@@ -1,20 +1,61 @@
 import Button from '../Button'
-
-import { CartContainer, Overlay, Prices, Quantity, SideBar } from './styles'
+import starWars from '../../assets/images/star_wars.png'
+import {
+  CartContainer,
+  CartItem,
+  Overlay,
+  Prices,
+  Quantity,
+  SideBar
+} from './styles'
+import Tag from '../Tag'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootReducer } from '../../store'
+import { close, remove } from '../../store/reducers/cart'
+import { formataPreco } from '../ProductList'
 
 const Cart = () => {
+  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+  const dispatch = useDispatch()
+
+  const closeCart = () => {
+    dispatch(close())
+  }
+
+  const getTotalPrice = () => {
+    return items.reduce(
+      (acc, currentValue) => acc + currentValue.prices.current!,
+      0
+    )
+  }
+
   return (
-    <CartContainer>
-      <Overlay />
+    <CartContainer className={isOpen ? 'is-open' : ''}>
+      <Overlay onClick={closeCart} />
       <SideBar>
         <ul>
-          <li>
-            <h3>nome do jogo</h3>
-          </li>
+          {items.map((item) => (
+            <CartItem key={item.id}>
+              <img src={item.media.thumbnail} alt={item.name} />
+              <div>
+                <h3>{item.name}</h3>
+                <Tag>{item.details.category}</Tag>
+                <Tag>{item.details.system}</Tag>
+                <span>{formataPreco(item.prices.current)}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  dispatch(remove(item.id))
+                }}
+              />
+            </CartItem>
+          ))}
         </ul>
-        <Quantity>2 jogo(s) no carrinho</Quantity>
+        <Quantity>{items.length} jogo(s) no carrinho</Quantity>
         <Prices>
-          Total de R$ 381,80 <span>em até 6x sem juros</span>
+          Total de {formataPreco(getTotalPrice())}
+          <span>em até 6x sem juros</span>
         </Prices>
         <Button title="Clique aqui para continuar com a compra" type="button">
           Continuar com a compra
