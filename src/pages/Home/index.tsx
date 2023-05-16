@@ -6,6 +6,7 @@ import resident from '../../assets/images/resident.png'
 import diablo from '../../assets/images/diablo.png'
 import starWars from '../../assets/images/star_wars.png'
 import zelda from '../../assets/images/zelda.png'
+import { useGetOnSaleQuery, useGetSoonQuery } from '../../services/api'
 
 // const promocoes: Game[] = [
 //   {
@@ -117,26 +118,32 @@ export type Game = {
 }
 
 const Home = () => {
-  const [promocoes, setPromocoes] = useState<Game[]>([])
-  const [emBreve, setEmBreve] = useState<Game[]>([])
+  // const [promocoes, setPromocoes] = useState<Game[]>([])
+  // const [emBreve, setEmBreve] = useState<Game[]>([])
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/eplay/promocoes')
-      .then((res) => res.json())
-      .then((data) => setPromocoes(data))
+  // useEffect(() => {
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/promocoes')
+  //     .then((res) => res.json())
+  //     .then((data) => setPromocoes(data))
 
-    fetch('https://fake-api-tau.vercel.app/api/eplay/em-breve')
-      .then((res) => res.json())
-      .then((data) => setEmBreve(data))
-  }, [])
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/em-breve')
+  //     .then((res) => res.json())
+  //     .then((data) => setEmBreve(data))
+  // }, [])
 
-  return (
-    <>
-      <Banner />
-      <ProductList title="Promoções" background="gray" games={promocoes} />
-      <ProductList title="Em breve" background="black" games={emBreve} />
-    </>
-  )
+  const { data: promocoes } = useGetOnSaleQuery()
+  const { data: emBreve } = useGetSoonQuery()
+
+  if (promocoes && emBreve) {
+    return (
+      <>
+        <Banner />
+        <ProductList title="Promoções" background="gray" games={promocoes} />
+        <ProductList title="Em breve" background="black" games={emBreve} />
+      </>
+    )
+  }
+  return <h4>Carregando</h4>
 }
 
 export default Home

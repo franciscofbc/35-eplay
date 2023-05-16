@@ -5,15 +5,21 @@ import Tag from '../Tag'
 import Button from '../Button'
 import { Game } from '../../pages/Home'
 import { formataPreco } from '../ProductList'
+import { useGetFeaturedGameQuery } from '../../services/api'
 
 const Banner = () => {
-  const [game, setGame] = useState<Game>()
+  // const [game, setGame] = useState<Game>()
+  const { data: game, isLoading } = useGetFeaturedGameQuery()
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/eplay/destaque')
-      .then((res) => res.json())
-      .then((data) => setGame(data))
-  }, [])
+  if (!isLoading) {
+    // console.log(game)
+  }
+
+  // useEffect(() => {
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/destaque')
+  //     .then((res) => res.json())
+  //     .then((data) => setGame(data))
+  // }, [])
 
   return (
     <Imagem style={{ backgroundImage: `url(${game?.media.cover})` }}>

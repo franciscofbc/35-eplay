@@ -7,6 +7,13 @@ import ProductList from '../../components/ProductList'
 // import zelda from '../../assets/images/zelda.png'
 
 import { Game } from '../Home'
+import {
+  useGetSimulationGamesQuery,
+  useGetActionGamesQuery,
+  useGetFightGamesQuery,
+  useGetRpgGamesQuery,
+  useGetSportGamesQuery
+} from '../../services/api'
 
 // const promocoes: Game[] = [
 //   {
@@ -89,43 +96,53 @@ import { Game } from '../Home'
 // ]
 
 const Categories = () => {
-  const [acao, setAcao] = useState<Game[]>([])
-  const [esportes, setEsportes] = useState<Game[]>([])
-  const [RPG, setRPG] = useState<Game[]>([])
-  const [luta, setLuta] = useState<Game[]>([])
-  const [simulacao, setSimulacao] = useState<Game[]>([])
+  // const [acao, setAcao] = useState<Game[]>([])
+  // const [esportes, setEsportes] = useState<Game[]>([])
+  // const [RPG, setRPG] = useState<Game[]>([])
+  // const [luta, setLuta] = useState<Game[]>([])
+  // const [simulacao, setSimulacao] = useState<Game[]>([])
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/eplay/acao')
-      .then((res) => res.json())
-      .then((data) => setAcao(data))
+  // useEffect(() => {
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/acao')
+  //     .then((res) => res.json())
+  //     .then((data) => setAcao(data))
 
-    fetch('https://fake-api-tau.vercel.app/api/eplay/esportes')
-      .then((res) => res.json())
-      .then((data) => setEsportes(data))
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/esportes')
+  //     .then((res) => res.json())
+  //     .then((data) => setEsportes(data))
 
-    fetch('https://fake-api-tau.vercel.app/api/eplay/rpg')
-      .then((res) => res.json())
-      .then((data) => setRPG(data))
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/rpg')
+  //     .then((res) => res.json())
+  //     .then((data) => setRPG(data))
 
-    fetch('https://fake-api-tau.vercel.app/api/eplay/luta')
-      .then((res) => res.json())
-      .then((data) => setLuta(data))
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/luta')
+  //     .then((res) => res.json())
+  //     .then((data) => setLuta(data))
 
-    fetch('https://fake-api-tau.vercel.app/api/eplay/simulacao')
-      .then((res) => res.json())
-      .then((data) => setSimulacao(data))
-  }, [])
+  //   fetch('https://fake-api-tau.vercel.app/api/eplay/simulacao')
+  //     .then((res) => res.json())
+  //     .then((data) => setSimulacao(data))
+  // }, [])
 
-  return (
-    <>
-      <ProductList title="Ação" background="black" games={acao} />
-      <ProductList title="Esportes" background="gray" games={esportes} />
-      <ProductList title="RPG" background="black" games={RPG} />
-      <ProductList title="Luta" background="gray" games={luta} />
-      <ProductList title="Simulacao" background="black" games={simulacao} />
-    </>
-  )
+  const { data: acao } = useGetActionGamesQuery()
+  const { data: esportes } = useGetSportGamesQuery()
+  const { data: RPG } = useGetRpgGamesQuery()
+  const { data: luta } = useGetFightGamesQuery()
+  const { data: simulacao } = useGetSimulationGamesQuery()
+
+  if (acao && esportes && RPG && luta && simulacao) {
+    return (
+      <>
+        <ProductList title="Ação" background="black" games={acao} />
+        <ProductList title="Esportes" background="gray" games={esportes} />
+        <ProductList title="RPG" background="black" games={RPG} />
+        <ProductList title="Luta" background="gray" games={luta} />
+        <ProductList title="Simulacao" background="black" games={simulacao} />
+      </>
+    )
+  }
+
+  return <h4>Carregando</h4>
 }
 
 export default Categories
