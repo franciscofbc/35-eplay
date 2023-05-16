@@ -27,10 +27,12 @@ export const Action = styled.div`
 export const Items = styled.ul`
   display: flex;
   margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 16px;
 `
 
 export const Item = styled.li`
-  margin-right: 16px;
+  // margin-right: 16px;
 
   > img {
     border: 2px solid ${cores.branca};

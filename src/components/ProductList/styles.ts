@@ -23,6 +23,10 @@ export const List = styled.ul`
   @media (max-width: ${breakPoints.desktop}) {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  @media (max-width: ${breakPoints.tablet}) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const Titulo = styled.h2`
