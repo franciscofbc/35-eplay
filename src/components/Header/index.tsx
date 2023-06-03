@@ -24,6 +24,28 @@ const Header = () => {
     dispatch(open())
   }
 
+  const menu = () => {
+    return (
+      <Links>
+        <LinkItem>
+          <Link
+            onClick={() => isMenuOpen && setIsMenuOpen(false)}
+            to="/categories"
+          >
+            Categorias
+          </Link>
+          {/* <a href="#">Categorias</a> */}
+        </LinkItem>
+        <LinkItem>
+          <a href="#">Novidades</a>
+        </LinkItem>
+        <LinkItem>
+          <a href="#">Promoções</a>
+        </LinkItem>
+      </Links>
+    )
+  }
+
   return (
     <HeaderBar>
       <HeaderRow>
@@ -33,28 +55,20 @@ const Header = () => {
           <span />
           <span />
         </Hamburguer>
-        <Link to="/">
-          <img src={logo} alt="EPLAY" />
-        </Link>
+        <div className="imgNavDesk">
+          <Link to="/">
+            <img src={logo} alt="EPLAY" />
+          </Link>
+          <div className="navDesk">{menu()}</div>
+        </div>
         {/* </div> */}
         <CartButton onClick={openCart}>
           {items.length} <span>- produto(s)</span>
           <img src={carrinho} alt="Carrinho" />
         </CartButton>
       </HeaderRow>
-      <NavMobile className={isMenuOpen ? 'is-open' : ''}>
-        <Links>
-          <LinkItem>
-            <Link to="/categories">Categorias</Link>
-            {/* <a href="#">Categorias</a> */}
-          </LinkItem>
-          <LinkItem>
-            <a href="#">Novidades</a>
-          </LinkItem>
-          <LinkItem>
-            <a href="#">Promoções</a>
-          </LinkItem>
-        </Links>
+      <NavMobile className={isMenuOpen ? 'is-open' : 'is-closed'}>
+        {menu()}
       </NavMobile>
     </HeaderBar>
   )

@@ -3,7 +3,6 @@ import { breakPoints, cores } from '../../styles'
 
 export const Links = styled.ul`
   display: flex;
-  margin-left: 40px;
 
   @media (max-width: ${breakPoints.tablet}) {
     margin-left: 0;
@@ -29,26 +28,25 @@ export const HeaderRow = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  // > div {
-  //display: flex;
-  //align-items: center;
-  // max-width: 60%;
+  .imgNavDesk {
+    display: flex;
+    align-items: center;
+  }
 
-  @media (max-width: ${breakPoints.tablet}) {
-    // flex: 1;
-    // justify-content: space-between;
-
-    ${Links} {
+  .navDesk {
+    margin-left: 40px;
+    @media (max-width: ${breakPoints.tablet}) {
       display: none;
     }
   }
-  // }
 `
 export const NavMobile = styled.nav`
-  display: none;
-
   &.is-open {
     display: block;
+  }
+
+  &.is-closed {
+    display: none;
   }
 `
 
@@ -65,7 +63,6 @@ export const LinkItem = styled.li`
     }
   }
 `
-
 export const CartButton = styled.a`
   display: flex;
   cursor: pointer;

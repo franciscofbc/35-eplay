@@ -33,6 +33,7 @@ export const Items = styled.ul`
 
 export const Item = styled.li`
   // margin-right: 16px;
+  cursor: zoom-in;
 
   > img {
     border: 2px solid ${cores.branca};
@@ -47,7 +48,7 @@ export const Item = styled.li`
   &:hover {
     ${Action} {
       opacity: 1;
-      cursor: pointer;
+      // cursor: pointer;
       transition: opacity 0.5s ease;
     }
   }
