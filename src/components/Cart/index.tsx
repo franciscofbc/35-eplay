@@ -1,47 +1,43 @@
-import Button from '../Button'
-import starWars from '../../assets/images/star_wars.png'
-import {
-  CartContainer,
-  CartItem,
-  Overlay,
-  Prices,
-  Quantity,
-  SideBar
-} from './styles'
-import Tag from '../Tag'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
+import Button from '../Button'
+import Tag from '../Tag'
+
 import { RootReducer } from '../../store'
 import { close, remove } from '../../store/reducers/cart'
-import { formataPreco } from '../ProductList'
+
+import { getTotalPrice, parseToBrl } from '../../utils'
+
+import * as S from './styles'
 
 const Cart = () => {
   const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const closeCart = () => {
     dispatch(close())
   }
 
-  const getTotalPrice = () => {
-    return items.reduce(
-      (acc, currentValue) => acc + currentValue.prices.current!,
-      0
-    )
+  const goToCheckout = () => {
+    navigate('/checkout')
+    closeCart()
   }
 
   return (
-    <CartContainer className={isOpen ? 'is-open' : ''}>
-      <Overlay onClick={closeCart} />
-      <SideBar>
+    <S.CartContainer className={isOpen ? 'is-open' : ''}>
+      <S.Overlay onClick={closeCart} />
+      <S.SideBar>
         <ul>
           {items.map((item) => (
-            <CartItem key={item.id}>
+            <S.CartItem key={item.id}>
               <img src={item.media.thumbnail} alt={item.name} />
               <div>
                 <h3>{item.name}</h3>
                 <Tag>{item.details.category}</Tag>
                 <Tag>{item.details.system}</Tag>
-                <span>{formataPreco(item.prices.current)}</span>
+                <span>{parseToBrl(item.prices.current)}</span>
               </div>
               <button
                 type="button"
@@ -49,19 +45,23 @@ const Cart = () => {
                   dispatch(remove(item.id))
                 }}
               />
-            </CartItem>
+            </S.CartItem>
           ))}
         </ul>
-        <Quantity>{items.length} jogo(s) no carrinho</Quantity>
-        <Prices>
-          Total de {formataPreco(getTotalPrice())}
+        <S.Quantity>{items.length} jogo(s) no carrinho</S.Quantity>
+        <S.Prices>
+          Total de {parseToBrl(getTotalPrice(items))}
           <span>em até 6x sem juros</span>
-        </Prices>
-        <Button title="Clique aqui para continuar com a compra" type="button">
+        </S.Prices>
+        <Button
+          onClick={goToCheckout}
+          title="Clique aqui para continuar com a compra"
+          type="button"
+        >
           Continuar com a compra
         </Button>
-      </SideBar>
-    </CartContainer>
+      </S.SideBar>
+    </S.CartContainer>
   )
 }
 

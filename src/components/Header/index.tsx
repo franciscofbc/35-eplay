@@ -1,19 +1,14 @@
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {
-  HeaderBar,
-  CartButton,
-  LinkItem,
-  Links,
-  Hamburguer,
-  HeaderRow,
-  NavMobile
-} from './styles'
+import { useState } from 'react'
+
 import logo from '../../assets/images/logo.svg'
 import carrinho from '../../assets/images/carrinho.svg'
+
 import { open } from '../../store/reducers/cart'
-import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
-import { useState } from 'react'
+
+import * as S from './styles'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -26,8 +21,8 @@ const Header = () => {
 
   const menu = () => {
     return (
-      <Links>
-        <LinkItem>
+      <S.Links>
+        <S.LinkItem>
           <Link
             onClick={() => isMenuOpen && setIsMenuOpen(false)}
             to="/categories"
@@ -35,42 +30,40 @@ const Header = () => {
             Categorias
           </Link>
           {/* <a href="#">Categorias</a> */}
-        </LinkItem>
-        <LinkItem>
+        </S.LinkItem>
+        <S.LinkItem>
           <a href="#">Novidades</a>
-        </LinkItem>
-        <LinkItem>
+        </S.LinkItem>
+        <S.LinkItem>
           <a href="#">Promoções</a>
-        </LinkItem>
-      </Links>
+        </S.LinkItem>
+      </S.Links>
     )
   }
 
   return (
-    <HeaderBar>
-      <HeaderRow>
-        {/* <div> */}
-        <Hamburguer onClick={() => setIsMenuOpen(!isMenuOpen)}>
+    <S.HeaderBar>
+      <S.HeaderRow>
+        <S.Hamburguer onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span />
           <span />
           <span />
-        </Hamburguer>
+        </S.Hamburguer>
         <div className="imgNavDesk">
           <Link to="/">
             <img src={logo} alt="EPLAY" />
           </Link>
           <div className="navDesk">{menu()}</div>
         </div>
-        {/* </div> */}
-        <CartButton onClick={openCart}>
+        <S.CartButton onClick={openCart}>
           {items.length} <span>- produto(s)</span>
           <img src={carrinho} alt="Carrinho" />
-        </CartButton>
-      </HeaderRow>
-      <NavMobile className={isMenuOpen ? 'is-open' : 'is-closed'}>
+        </S.CartButton>
+      </S.HeaderRow>
+      <S.NavMobile className={isMenuOpen ? 'is-open' : 'is-closed'}>
         {menu()}
-      </NavMobile>
-    </HeaderBar>
+      </S.NavMobile>
+    </S.HeaderBar>
   )
 }
 

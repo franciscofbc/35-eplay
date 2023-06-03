@@ -4,8 +4,8 @@ import bannerImg from '../../assets/images/banner-homem-aranha.png'
 import Tag from '../Tag'
 import Button from '../Button'
 import { Game } from '../../pages/Home'
-import { formataPreco } from '../ProductList'
 import { useGetFeaturedGameQuery } from '../../services/api'
+import { parseToBrl } from '../../utils'
 
 const Banner = () => {
   // const [game, setGame] = useState<Game>()
@@ -28,9 +28,9 @@ const Banner = () => {
         <div>
           <Titulo>{game?.name}</Titulo>
           <Precos>
-            De <span>{formataPreco(game?.prices.old)}</span>
+            De <span>{parseToBrl(game?.prices.old)}</span>
             <br />
-            por apenas {formataPreco(game?.prices.current)}
+            por apenas {parseToBrl(game?.prices.current)}
           </Precos>
         </div>
         <Button
