@@ -1,25 +1,18 @@
-import { useEffect, useState } from 'react'
-import { Imagem, Precos, Titulo } from './styles'
-import bannerImg from '../../assets/images/banner-homem-aranha.png'
+import Loader from '../Loader'
 import Tag from '../Tag'
 import Button from '../Button'
-import { Game } from '../../pages/Home'
+
 import { useGetFeaturedGameQuery } from '../../services/api'
 import { parseToBrl } from '../../utils'
 
+import { Imagem, Precos, Titulo } from './styles'
+
 const Banner = () => {
-  // const [game, setGame] = useState<Game>()
-  const { data: game, isLoading } = useGetFeaturedGameQuery()
+  const { data: game } = useGetFeaturedGameQuery()
 
-  if (!isLoading) {
-    // console.log(game)
+  if (!game) {
+    return <Loader />
   }
-
-  // useEffect(() => {
-  //   fetch('https://fake-api-tau.vercel.app/api/eplay/destaque')
-  //     .then((res) => res.json())
-  //     .then((data) => setGame(data))
-  // }, [])
 
   return (
     <Imagem style={{ backgroundImage: `url(${game?.media.cover})` }}>

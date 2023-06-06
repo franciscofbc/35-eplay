@@ -7,7 +7,6 @@ import fechar from '../../assets/images/fechar.png'
 import { Action, Item, Items, Modal, ModalContent } from './styles'
 import { useState } from 'react'
 import { isVisible } from '@testing-library/user-event/dist/utils'
-import { GalleryItem } from '../../pages/Home'
 
 const mock: GalleryItem[] = [
   { type: 'image', url: spiderman },
@@ -78,12 +77,7 @@ const Gallery = ({ defaultCover, name, items }: Props) => {
         <ModalContent className="container">
           <header>
             <h4>{name}</h4>
-            <img
-              style={{ cursor: 'pointer' }}
-              src={fechar}
-              alt="Ícone de fechar"
-              onClick={closeModal}
-            />
+            <img src={fechar} alt="Ícone de fechar" onClick={closeModal} />
           </header>
           {modal.type === 'image' ? (
             <img src={modal.url} />
